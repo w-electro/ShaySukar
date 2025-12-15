@@ -1,0 +1,36 @@
+Extracted Text:
+MENU
+13 sR
+8
+SR
+6
+SR
+20 sR
+katak
+19 sR
+14 sR
+12 sR
+30 sR
+15 sR
+9
+SR
+7
+SR
+7
+SR
+8
+SR
+'baked
+18 sR
+14 SR
+18 sR
+25 sR
+12 sR
+))
+Tea
+is a ritual, an art that
+nourishes the soul:
+
+Dominant Color: (248, 241, 220)
+Palette: [(247, 240, 220), (26, 62, 75), (129, 116, 97), (124, 116, 112), (116, 156, 172)]
+Size: 1102x1560

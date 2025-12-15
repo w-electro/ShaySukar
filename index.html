@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaySukar Tea Menu</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: rgb(248, 241, 220);
+            color: rgb(26, 62, 75);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .quote {
+            font-style: italic;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .menu-section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(129, 116, 97, 0.1);
+            border-radius: 10px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgb(124, 116, 112);
+        }
+        .item:last-child {
+            border-bottom: none;
+        }
+        .item-name {
+            font-weight: bold;
+        }
+        .item-price {
+            color: rgb(116, 156, 172);
+        }
+        button {
+            background-color: rgb(26, 62, 75);
+            color: rgb(248, 241, 220);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: rgb(116, 156, 172);
+        }
+        .cart {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(116, 156, 172, 0.1);
+            border-radius: 10px;
+        }
+        #cart-items {
+            list-style: none;
+            padding: 0;
+        }
+        #total {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>MENU</h1>
+    <div class="quote">"Tea is a ritual, an art that nourishes the soul."</div>
+
+    <div class="menu-section">
+        <h2>Tea Selection</h2>
+        <div class="item">
+            <span class="item-name">Classic Black Tea</span>
+            <span class="item-price">13 SR</span>
+            <button onclick="addToCart('Classic Black Tea', 13)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Green Tea</span>
+            <span class="item-price">8 SR</span>
+            <button onclick="addToCart('Green Tea', 8)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Herbal Tea</span>
+            <span class="item-price">6 SR</span>
+            <button onclick="addToCart('Herbal Tea', 6)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Chamomile Tea</span>
+            <span class="item-price">20 SR</span>
+            <button onclick="addToCart('Chamomile Tea', 20)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Special Blend</span>
+            <span class="item-price">19 SR</span>
+            <button onclick="addToCart('Special Blend', 19)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Earl Grey</span>
+            <span class="item-price">14 SR</span>
+            <button onclick="addToCart('Earl Grey', 14)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Oolong Tea</span>
+            <span class="item-price">12 SR</span>
+            <button onclick="addToCart('Oolong Tea', 12)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Premium Blend</span>
+            <span class="item-price">30 SR</span>
+            <button onclick="addToCart('Premium Blend', 30)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">White Tea</span>
+            <span class="item-price">15 SR</span>
+            <button onclick="addToCart('White Tea', 15)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Baked Tea</span>
+            <span class="item-price">18 SR</span>
+            <button onclick="addToCart('Baked Tea', 18)">Add to Order</button>
+        </div>
+        <div class="item">
+            <span class="item-name">Matcha Latte</span>
+            <span class="item-price">25 SR</span>
+            <button onclick="addToCart('Matcha Latte', 25)">Add to Order</button>
+        </div>
+    </div>
+
+    <div class="cart">
+        <h2>Your Order</h2>
+        <ul id="cart-items"></ul>
+        <div id="total">Total: 0 SR</div>
+        <button onclick="sendToBarista()">Send Order to Barista</button>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(name, price) {
+            cart.push({name, price});
+            total += price;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - ${item.price} SR`;
+                cartItems.appendChild(li);
+            });
+            document.getElementById('total').textContent = `Total: ${total} SR`;
+        }
+
+        function sendToBarista() {
+            if (cart.length === 0) {
+                alert('Please add items to your order first.');
+                return;
+            }
+            const order = cart.map(item => `${item.name} (${item.price} SR)`).join(', ');
+            alert(`Order sent to barista: ${order}. Total: ${total} SR`);
+            // In a real app, this would send to backend
+            cart = [];
+            total = 0;
+            updateCart();
+        }
+    </script>
+</body>
+</html>
