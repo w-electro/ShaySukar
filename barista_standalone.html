@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barista Dashboard - Shay Sukar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,66 +14,130 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #1A4D5C 0%, #2A6D7C 100%);
+            background-color: #F5E6D3;
             min-height: 100vh;
             padding: 20px;
-            color: #FAF4EA;
+            color: #1A4D5C;
+        }
+
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         .dashboard-header {
-            text-align: center;
-            margin-bottom: 30px;
-            background-color: rgba(250, 244, 234, 0.1);
-            padding: 20px;
+            background-color: #1A4D5C;
+            color: #FAF4EA;
+            padding: 30px;
             border-radius: 10px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: center;
         }
 
-        .dashboard-header h1 {
+        .header-logo {
+            width: 120px;
+            height: 120px;
+            padding: 15px;
+            background-color: rgba(250, 244, 234, 0.1);
+            border-radius: 8px;
+        }
+
+        .logo-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+        }
+
+        .header-title p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .sound-toggle {
+            background-color: rgba(250, 244, 234, 0.2);
+            color: #FAF4EA;
+            border: 2px solid #FAF4EA;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .sound-toggle:hover {
+            background-color: rgba(250, 244, 234, 0.3);
+            transform: scale(1.05);
         }
 
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin-bottom: 30px;
         }
 
         .stat-card {
-            background-color: rgba(250, 244, 234, 0.15);
-            padding: 20px;
+            background-color: #FAF4EA;
+            border: 2px solid #1A4D5C;
+            padding: 25px;
             border-radius: 8px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(26, 77, 92, 0.2);
         }
 
         .stat-value {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: #5cb85c;
+            color: #1A4D5C;
+            margin-bottom: 10px;
         }
 
+        .stat-card:nth-child(1) .stat-value { color: #f0ad4e; }
+        .stat-card:nth-child(2) .stat-value { color: #0275d8; }
+        .stat-card:nth-child(3) .stat-value { color: #5cb85c; }
+        .stat-card:nth-child(4) .stat-value { color: #5bc0de; }
+        .stat-card:nth-child(5) .stat-value { color: #1A4D5C; }
+
         .stat-label {
-            font-size: 1rem;
-            margin-top: 5px;
-            opacity: 0.9;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1A4D5C;
         }
 
         .orders-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 20px;
         }
 
         .order-card {
             background-color: #FAF4EA;
             color: #1A4D5C;
-            padding: 20px;
+            padding: 25px;
+            border: 2px solid #1A4D5C;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            animation: slideIn 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideIn 0.4s ease;
         }
 
         @keyframes slideIn {
@@ -88,7 +152,8 @@
         }
 
         .order-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(26, 77, 92, 0.3);
         }
 
         .order-header {
@@ -96,34 +161,40 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #1A4D5C;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #1A4D5C;
         }
 
         .order-id {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
+            color: #1A4D5C;
         }
 
         .order-time {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             opacity: 0.7;
+            font-weight: 600;
         }
 
         .order-info {
             margin-bottom: 15px;
+            background-color: rgba(26, 77, 92, 0.05);
+            padding: 12px;
+            border-radius: 6px;
         }
 
         .order-table {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
             margin-bottom: 5px;
+            color: #1A4D5C;
         }
 
         .order-customer {
-            font-size: 0.95rem;
+            font-size: 1rem;
             opacity: 0.8;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .order-items {
@@ -133,32 +204,37 @@
         .order-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px;
-            background-color: rgba(26, 77, 92, 0.1);
-            margin-bottom: 5px;
-            border-radius: 5px;
+            padding: 10px 12px;
+            background-color: rgba(26, 77, 92, 0.08);
+            margin-bottom: 6px;
+            border-radius: 6px;
+            border-right: 3px solid #1A4D5C;
         }
 
         .item-name {
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.05rem;
         }
 
         .item-quantity {
             opacity: 0.7;
             margin-left: 10px;
+            font-weight: 600;
         }
 
         .item-price {
             font-weight: 700;
+            color: #1A4D5C;
         }
 
         .order-total {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
-            text-align: right;
-            padding-top: 10px;
-            border-top: 2px solid #1A4D5C;
+            text-align: left;
+            padding-top: 12px;
+            border-top: 3px solid #1A4D5C;
             margin-top: 10px;
+            color: #1A4D5C;
         }
 
         .order-actions {
@@ -169,13 +245,14 @@
 
         .btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: none;
             border-radius: 6px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
         }
 
         .btn-preparing {
@@ -185,6 +262,7 @@
 
         .btn-preparing:hover {
             background-color: #ec971f;
+            transform: translateY(-2px);
         }
 
         .btn-ready {
@@ -194,6 +272,7 @@
 
         .btn-ready:hover {
             background-color: #4cae4c;
+            transform: translateY(-2px);
         }
 
         .btn-complete {
@@ -203,6 +282,7 @@
 
         .btn-complete:hover {
             background-color: #025aa5;
+            transform: translateY(-2px);
         }
 
         .btn-cancel {
@@ -212,14 +292,15 @@
 
         .btn-cancel:hover {
             background-color: #c9302c;
+            transform: translateY(-2px);
         }
 
         .status-badge {
             display: inline-block;
-            padding: 5px 15px;
+            padding: 6px 16px;
             border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             text-align: center;
         }
 
@@ -251,30 +332,30 @@
         .no-orders {
             text-align: center;
             padding: 60px 20px;
-            font-size: 1.5rem;
-            opacity: 0.7;
+            font-size: 1.8rem;
+            opacity: 0.6;
             grid-column: 1 / -1;
-        }
-
-        .sound-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(250, 244, 234, 0.2);
-            color: white;
-            border: 2px solid #FAF4EA;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
+            background-color: #FAF4EA;
+            border: 2px dashed #1A4D5C;
+            border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .sound-toggle:hover {
-            background-color: rgba(250, 244, 234, 0.3);
         }
 
         @media (max-width: 768px) {
+            .dashboard-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .header-logo {
+                margin: 0 auto;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
             .orders-container {
                 grid-template-columns: 1fr;
             }
@@ -282,38 +363,75 @@
     </style>
 </head>
 <body>
-    <button class="sound-toggle" id="soundToggle">🔔 تنبيه صوتي</button>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="header-logo">
+                <svg class="logo-svg" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Abstract geometric teapot design -->
+                    <g fill="#FAF4EA" stroke="#FAF4EA" stroke-width="3">
+                        <!-- Top ornament -->
+                        <path d="M 40 40 L 60 20 L 80 40 L 60 60 Z" opacity="0.9"/>
 
-    <div class="dashboard-header">
-        <h1>لوحة تحكم الباريستا</h1>
-        <p>Shay Sukar Order Management</p>
-    </div>
+                        <!-- Upper container part -->
+                        <rect x="60" y="70" width="80" height="40" rx="5" transform="rotate(-10 100 90)"/>
 
-    <div class="stats-container">
-        <div class="stat-card">
-            <div class="stat-value" id="statPending">0</div>
-            <div class="stat-label">طلبات جديدة</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="statPreparing">0</div>
-            <div class="stat-label">قيد التحضير</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="statReady">0</div>
-            <div class="stat-label">جاهزة</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="statCompleted">0</div>
-            <div class="stat-label">مكتملة</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" id="statRevenue">0</div>
-            <div class="stat-label">الإيرادات (SR)</div>
-        </div>
-    </div>
+                        <!-- Spout -->
+                        <path d="M 145 90 L 170 75 L 175 95 L 160 105 Z"/>
 
-    <div class="orders-container" id="ordersContainer">
-        <div class="no-orders">لا توجد طلبات حاليًا</div>
+                        <!-- Handle -->
+                        <path d="M 55 100 L 35 90 L 30 130 L 50 135 Z"/>
+
+                        <!-- Main body - left panel -->
+                        <rect x="50" y="130" width="50" height="80" rx="3"/>
+
+                        <!-- Main body - center panel -->
+                        <rect x="105" y="125" width="45" height="90" rx="3" transform="rotate(5 127 170)"/>
+
+                        <!-- Main body - right panel -->
+                        <rect x="75" y="215" width="55" height="45" rx="3" transform="rotate(-8 102 237)"/>
+
+                        <!-- Bottom diamonds -->
+                        <path d="M 135 240 L 145 230 L 155 240 L 145 250 Z" opacity="0.8"/>
+                        <path d="M 160 255 L 167 248 L 174 255 L 167 262 Z" opacity="0.8"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>لوحة تحكم الباريستا</h1>
+                    <p>Barista Dashboard - Shay Sukar</p>
+                </div>
+                <button class="sound-toggle" id="soundToggle">🔔 تنبيه صوتي</button>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value" id="statPending">0</div>
+                <div class="stat-label">طلبات جديدة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statPreparing">0</div>
+                <div class="stat-label">قيد التحضير</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statReady">0</div>
+                <div class="stat-label">جاهزة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statCompleted">0</div>
+                <div class="stat-label">مكتملة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statRevenue">0</div>
+                <div class="stat-label">الإيرادات (SR)</div>
+            </div>
+        </div>
+
+        <div class="orders-container" id="ordersContainer">
+            <div class="no-orders">لا توجد طلبات حاليًا</div>
+        </div>
     </div>
 
     <script>
@@ -415,8 +533,8 @@
                             <div class="order-time">${time}</div>
                         </div>
                         <div class="order-info">
-                            <div class="order-table">طاولة: ${order.tableNumber}</div>
-                            <div class="order-customer">الزبون: ${order.customerName}</div>
+                            <div class="order-table">🪑 طاولة: ${order.tableNumber}</div>
+                            <div class="order-customer">👤 الزبون: ${order.customerName}</div>
                             <span class="status-badge status-${order.status}">
                                 ${getStatusText(order.status)}
                             </span>
@@ -426,14 +544,14 @@
                                 <div class="order-item">
                                     <div>
                                         <span class="item-name">${item.name}</span>
-                                        <span class="item-quantity">x${item.quantity}</span>
+                                        <span class="item-quantity">×${item.quantity}</span>
                                     </div>
                                     <span class="item-price">${(item.price * item.quantity).toFixed(2)} SR</span>
                                 </div>
                             `).join('')}
                         </div>
                         <div class="order-total">
-                            المجموع: ${order.total.toFixed(2)} SR
+                            💰 المجموع: ${order.total.toFixed(2)} SR
                         </div>
                         <div class="order-actions">
                             ${getActionButtons(order.id, order.status)}
@@ -485,6 +603,12 @@
                 saveOrders();
                 renderOrders();
                 updateStats();
+
+                // Trigger storage event for customer view
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'shaySukarOrders',
+                    newValue: JSON.stringify(orders)
+                }));
             }
         }
 
