@@ -175,64 +175,117 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 15px;
+            padding: 15px;
             margin-bottom: 10px;
             border-radius: 6px;
-            cursor: pointer;
             transition: all 0.3s ease;
             background-color: transparent;
             position: relative;
+            border: 2px solid transparent;
         }
 
         .menu-item:hover {
-            background-color: #1A4D5C;
-            color: #FAF4EA;
-            transform: translateX(-5px);
+            background-color: rgba(26, 77, 92, 0.05);
+            border-color: #1A4D5C;
         }
 
-        .menu-item.in-cart::after {
-            content: '✓';
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.5rem;
-            color: #5cb85c;
-            font-weight: bold;
-        }
-
-        .menu-item:hover.in-cart::after {
-            color: #FAF4EA;
+        .item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .item-name {
             font-size: 1.3rem;
             font-weight: 600;
             color: #1A4D5C;
-            transition: color 0.3s ease;
-        }
-
-        .menu-item:hover .item-name {
-            color: #FAF4EA;
         }
 
         .item-price {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #1A4D5C;
-            transition: color 0.3s ease;
-        }
-
-        .menu-item:hover .item-price {
-            color: #FAF4EA;
+            opacity: 0.8;
         }
 
         .currency {
             font-size: 0.9rem;
-            opacity: 0.8;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(26, 77, 92, 0.1);
+            padding: 5px;
+            border-radius: 25px;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background-color: #1A4D5C;
+            color: #FAF4EA;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background-color: #0f3540;
+            transform: scale(1.1);
+        }
+
+        .qty-btn:active {
+            transform: scale(0.95);
+        }
+
+        .qty-display {
+            min-width: 35px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1A4D5C;
+        }
+
+        .add-to-cart-btn {
+            padding: 8px 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #4cae4c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(92, 184, 92, 0.3);
+        }
+
+        .add-to-cart-btn:active {
+            transform: translateY(0);
+        }
+
+        .add-to-cart-btn.in-cart {
+            background-color: #1A4D5C;
         }
 
         .quote-section {
@@ -493,20 +546,60 @@
                     </div>
                     <div class="menu-items">
                         <div class="menu-item" data-name="شاي قزاز" data-price="13" data-category="tea">
-                            <span class="item-name">شاي قزاز</span>
-                            <span class="item-price">13 <span class="currency">SR</span></span>
+                            <div class="item-info">
+                                <span class="item-name">شاي قزاز</span>
+                                <span class="item-price">13 <span class="currency">SR</span></span>
+                            </div>
+                            <div class="item-controls">
+                                <div class="quantity-controls">
+                                    <button class="qty-btn qty-minus">−</button>
+                                    <span class="qty-display">1</span>
+                                    <button class="qty-btn qty-plus">+</button>
+                                </div>
+                                <button class="add-to-cart-btn">إضافة</button>
+                            </div>
                         </div>
                         <div class="menu-item" data-name="شاي كبير" data-price="8" data-category="tea">
-                            <span class="item-name">شاي كبير</span>
-                            <span class="item-price">8 <span class="currency">SR</span></span>
+                            <div class="item-info">
+                                <span class="item-name">شاي كبير</span>
+                                <span class="item-price">8 <span class="currency">SR</span></span>
+                            </div>
+                            <div class="item-controls">
+                                <div class="quantity-controls">
+                                    <button class="qty-btn qty-minus">−</button>
+                                    <span class="qty-display">1</span>
+                                    <button class="qty-btn qty-plus">+</button>
+                                </div>
+                                <button class="add-to-cart-btn">إضافة</button>
+                            </div>
                         </div>
                         <div class="menu-item" data-name="شاي صغير" data-price="6" data-category="tea">
-                            <span class="item-name">شاي صغير</span>
-                            <span class="item-price">6 <span class="currency">SR</span></span>
+                            <div class="item-info">
+                                <span class="item-name">شاي صغير</span>
+                                <span class="item-price">6 <span class="currency">SR</span></span>
+                            </div>
+                            <div class="item-controls">
+                                <div class="quantity-controls">
+                                    <button class="qty-btn qty-minus">−</button>
+                                    <span class="qty-display">1</span>
+                                    <button class="qty-btn qty-plus">+</button>
+                                </div>
+                                <button class="add-to-cart-btn">إضافة</button>
+                            </div>
                         </div>
                         <div class="menu-item" data-name="شاي ابريق" data-price="20" data-category="tea">
-                            <span class="item-name">شاي ابريق</span>
-                            <span class="item-price">20 <span class="currency">SR</span></span>
+                            <div class="item-info">
+                                <span class="item-name">شاي ابريق</span>
+                                <span class="item-price">20 <span class="currency">SR</span></span>
+                            </div>
+                            <div class="item-controls">
+                                <div class="quantity-controls">
+                                    <button class="qty-btn qty-minus">−</button>
+                                    <span class="qty-display">1</span>
+                                    <button class="qty-btn qty-plus">+</button>
+                                </div>
+                                <button class="add-to-cart-btn">إضافة</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -522,24 +615,74 @@
                 </div>
                 <div class="menu-items">
                     <div class="menu-item" data-name="تيشرز مجريند" data-price="19" data-category="sweet">
-                        <span class="item-name">تيشرز مجريند</span>
-                        <span class="item-price">19 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">تيشرز مجريند</span>
+                            <span class="item-price">19 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="حبة تمر" data-price="12" data-category="sweet">
-                        <span class="item-name">حبة تمر</span>
-                        <span class="item-price">12 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">حبة تمر</span>
+                            <span class="item-price">12 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="حلا أوريسو" data-price="15" data-category="sweet">
-                        <span class="item-name">حلا أوريسو</span>
-                        <span class="item-price">15 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">حلا أوريسو</span>
+                            <span class="item-price">15 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="جوبكز شوكو" data-price="7" data-category="sweet">
-                        <span class="item-name">جوبكز شوكو</span>
-                        <span class="item-price">7 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">جوبكز شوكو</span>
+                            <span class="item-price">7 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="كراشي" data-price="8" data-category="sweet">
-                        <span class="item-name">كراشي</span>
-                        <span class="item-price">8 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">كراشي</span>
+                            <span class="item-price">8 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -552,20 +695,60 @@
                 </div>
                 <div class="menu-items">
                     <div class="menu-item" data-name="كرك قزاز" data-price="14" data-category="karak">
-                        <span class="item-name">كرك قزاز</span>
-                        <span class="item-price">14 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">كرك قزاز</span>
+                            <span class="item-price">14 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="كرك ابريق" data-price="30" data-category="karak">
-                        <span class="item-name">كرك ابريق</span>
-                        <span class="item-price">30 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">كرك ابريق</span>
+                            <span class="item-price">30 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="كرك كبير" data-price="9" data-category="karak">
-                        <span class="item-name">كرك كبير</span>
-                        <span class="item-price">9 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">كرك كبير</span>
+                            <span class="item-price">9 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="كرك صغير" data-price="7" data-category="karak">
-                        <span class="item-name">كرك صغير</span>
-                        <span class="item-price">7 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">كرك صغير</span>
+                            <span class="item-price">7 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -578,20 +761,60 @@
                 </div>
                 <div class="menu-items">
                     <div class="menu-item" data-name="مسحن" data-price="18" data-category="baked">
-                        <span class="item-name">مسحن</span>
-                        <span class="item-price">18 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">مسحن</span>
+                            <span class="item-price">18 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="خليبة" data-price="18" data-category="baked">
-                        <span class="item-name">خليبة</span>
-                        <span class="item-price">18 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">خليبة</span>
+                            <span class="item-price">18 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="ورق عنب" data-price="15" data-category="baked">
-                        <span class="item-name">ورق عنب</span>
-                        <span class="item-price">15 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">ورق عنب</span>
+                            <span class="item-price">15 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="سمبوسة" data-price="12" data-category="baked">
-                        <span class="item-name">سمبوسة</span>
-                        <span class="item-price">12 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">سمبوسة</span>
+                            <span class="item-price">12 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -604,16 +827,46 @@
                 </div>
                 <div class="menu-items">
                     <div class="menu-item" data-name="قهوة كبير" data-price="14" data-category="coffee">
-                        <span class="item-name">قهوة كبير</span>
-                        <span class="item-price">14 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">قهوة كبير</span>
+                            <span class="item-price">14 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="قهوة صغير" data-price="10" data-category="coffee">
-                        <span class="item-name">قهوة صغير</span>
-                        <span class="item-price">10 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">قهوة صغير</span>
+                            <span class="item-price">10 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                     <div class="menu-item" data-name="دلة سعودي" data-price="25" data-category="coffee">
-                        <span class="item-name">دلة سعودي</span>
-                        <span class="item-price">25 <span class="currency">SR</span></span>
+                        <div class="item-info">
+                            <span class="item-name">دلة سعودي</span>
+                            <span class="item-price">25 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="item-controls">
+                            <div class="quantity-controls">
+                                <button class="qty-btn qty-minus">−</button>
+                                <span class="qty-display">1</span>
+                                <button class="qty-btn qty-plus">+</button>
+                            </div>
+                            <button class="add-to-cart-btn">إضافة</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -734,34 +987,6 @@
         // Save cart to localStorage
         function saveCart() {
             localStorage.setItem('shaySukarCart', JSON.stringify(cart));
-            updateItemHighlights();
-        }
-
-        // Update item highlights
-        function updateItemHighlights() {
-            document.querySelectorAll('.menu-item').forEach(item => {
-                const name = item.dataset.name;
-                const inCart = cart.some(cartItem => cartItem.name === name);
-                item.classList.toggle('in-cart', inCart);
-            });
-        }
-
-        // Add item to cart
-        function addToCart(name, price, category) {
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity++;
-            } else {
-                cart.push({
-                    name: name,
-                    price: parseFloat(price),
-                    category: category,
-                    quantity: 1
-                });
-            }
-            updateCartDisplay();
-            saveCart();
-            showNotification(`تمت إضافة ${name} إلى السلة`);
         }
 
         // Remove item from cart
@@ -868,15 +1093,68 @@
             document.getElementById('orderCart').classList.add('hidden');
         }
 
-        // Event listeners
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const name = this.dataset.name;
-                const price = this.dataset.price;
-                const category = this.dataset.category;
-                addToCart(name, price, category);
+        // Initialize quantity controls
+        function initializeQuantityControls() {
+            document.querySelectorAll('.menu-item').forEach(menuItem => {
+                const qtyDisplay = menuItem.querySelector('.qty-display');
+                const qtyPlus = menuItem.querySelector('.qty-plus');
+                const qtyMinus = menuItem.querySelector('.qty-minus');
+                const addBtn = menuItem.querySelector('.add-to-cart-btn');
+
+                let quantity = 1;
+
+                // Plus button
+                qtyPlus.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    quantity++;
+                    qtyDisplay.textContent = quantity;
+                });
+
+                // Minus button
+                qtyMinus.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (quantity > 1) {
+                        quantity--;
+                        qtyDisplay.textContent = quantity;
+                    }
+                });
+
+                // Add to cart button
+                addBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const name = menuItem.dataset.name;
+                    const price = menuItem.dataset.price;
+                    const category = menuItem.dataset.category;
+
+                    addToCartWithQuantity(name, price, category, quantity);
+
+                    // Reset quantity to 1 after adding
+                    quantity = 1;
+                    qtyDisplay.textContent = quantity;
+                });
             });
-        });
+        }
+
+        // Add item to cart with specific quantity
+        function addToCartWithQuantity(name, price, category, qty) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += qty;
+            } else {
+                cart.push({
+                    name: name,
+                    price: parseFloat(price),
+                    category: category,
+                    quantity: qty
+                });
+            }
+            updateCartDisplay();
+            saveCart();
+            showNotification(`تمت إضافة ${qty}× ${name} إلى السلة`);
+        }
+
+        // Initialize controls
+        initializeQuantityControls();
 
         document.getElementById('cartToggle').addEventListener('click', function() {
             const cart = document.getElementById('orderCart');
@@ -903,7 +1181,6 @@
 
         // Load cart on page load
         loadCart();
-        updateItemHighlights();
 
         // Check order status periodically
         setInterval(checkOrderStatus, 2000);
