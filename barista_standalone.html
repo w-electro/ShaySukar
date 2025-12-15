@@ -45,9 +45,10 @@
             border-radius: 8px;
         }
 
-        .logo-svg {
+        .logo-img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
         }
 
         .header-content {
@@ -366,35 +367,7 @@
     <div class="dashboard-container">
         <div class="dashboard-header">
             <div class="header-logo">
-                <svg class="logo-svg" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Abstract geometric teapot design -->
-                    <g fill="#FAF4EA" stroke="#FAF4EA" stroke-width="3">
-                        <!-- Top ornament -->
-                        <path d="M 40 40 L 60 20 L 80 40 L 60 60 Z" opacity="0.9"/>
-
-                        <!-- Upper container part -->
-                        <rect x="60" y="70" width="80" height="40" rx="5" transform="rotate(-10 100 90)"/>
-
-                        <!-- Spout -->
-                        <path d="M 145 90 L 170 75 L 175 95 L 160 105 Z"/>
-
-                        <!-- Handle -->
-                        <path d="M 55 100 L 35 90 L 30 130 L 50 135 Z"/>
-
-                        <!-- Main body - left panel -->
-                        <rect x="50" y="130" width="50" height="80" rx="3"/>
-
-                        <!-- Main body - center panel -->
-                        <rect x="105" y="125" width="45" height="90" rx="3" transform="rotate(5 127 170)"/>
-
-                        <!-- Main body - right panel -->
-                        <rect x="75" y="215" width="55" height="45" rx="3" transform="rotate(-8 102 237)"/>
-
-                        <!-- Bottom diamonds -->
-                        <path d="M 135 240 L 145 230 L 155 240 L 145 250 Z" opacity="0.8"/>
-                        <path d="M 160 255 L 167 248 L 174 255 L 167 262 Z" opacity="0.8"/>
-                    </g>
-                </svg>
+                <img src="logo.png" alt="Shay Sukar Logo" class="logo-img">
             </div>
 
             <div class="header-content">
