@@ -1,0 +1,26 @@
+{
+  "name": "shay-sukar-ordering-system",
+  "version": "1.0.0",
+  "description": "Interactive ordering menu system for Shay Sukar tea shop",
+  "main": "barista_server.js",
+  "scripts": {
+    "start": "node barista_server.js",
+    "dev": "nodemon barista_server.js"
+  },
+  "keywords": [
+    "ordering",
+    "menu",
+    "tea",
+    "barista",
+    "websocket"
+  ],
+  "author": "Shay Sukar",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
