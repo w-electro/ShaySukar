@@ -20,22 +20,48 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background-color: #F5E6D3;
         }
 
+        .top-section {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            background-color: #1A4D5C;
+            padding: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-svg {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+        }
+
+        .header-and-tea {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .menu-header {
             text-align: center;
-            margin-bottom: 30px;
         }
 
         .menu-title {
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: 700;
             color: #1A4D5C;
-            letter-spacing: 0.1em;
-            margin-bottom: 20px;
+            letter-spacing: 0.15em;
         }
 
         .menu-grid {
@@ -93,12 +119,28 @@
             cursor: pointer;
             transition: all 0.3s ease;
             background-color: transparent;
+            position: relative;
         }
 
         .menu-item:hover {
             background-color: #1A4D5C;
             color: #FAF4EA;
             transform: translateX(-5px);
+        }
+
+        .menu-item.in-cart::after {
+            content: '✓';
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #5cb85c;
+            font-weight: bold;
+        }
+
+        .menu-item:hover.in-cart::after {
+            color: #FAF4EA;
         }
 
         .item-name {
@@ -161,15 +203,16 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            min-width: 300px;
-            max-height: 400px;
+            min-width: 320px;
+            max-width: 400px;
+            max-height: 500px;
             overflow-y: auto;
             z-index: 1000;
             transition: transform 0.3s ease;
         }
 
         .order-cart.hidden {
-            transform: translateY(500px);
+            transform: translateY(600px);
         }
 
         .cart-header {
@@ -178,7 +221,22 @@
             margin-bottom: 15px;
             border-bottom: 2px solid #FAF4EA;
             padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .order-status {
+            font-size: 0.9rem;
+            padding: 5px 12px;
+            border-radius: 15px;
+            background-color: rgba(250, 244, 234, 0.2);
+        }
+
+        .status-pending { background-color: #f0ad4e; }
+        .status-preparing { background-color: #0275d8; }
+        .status-ready { background-color: #5cb85c; }
+        .status-completed { background-color: #5bc0de; }
 
         .cart-item {
             display: flex;
@@ -323,82 +381,105 @@
             }
         }
 
+        @media (max-width: 1024px) {
+            .top-section {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-container {
+                max-height: 300px;
+            }
+        }
+
         @media (max-width: 768px) {
             .menu-grid {
                 grid-template-columns: 1fr;
             }
 
             .menu-title {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
             .order-cart {
                 left: 10px;
                 right: 10px;
                 min-width: auto;
+                max-width: none;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="menu-header">
-            <h1 class="menu-title">MENU</h1>
+        <div class="top-section">
+            <!-- Logo Section -->
+            <div class="logo-container">
+                <svg class="logo-svg" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Abstract geometric teapot design -->
+                    <g fill="#FAF4EA" stroke="#FAF4EA" stroke-width="3">
+                        <!-- Top ornament -->
+                        <path d="M 40 40 L 60 20 L 80 40 L 60 60 Z" opacity="0.9"/>
+
+                        <!-- Upper container part -->
+                        <rect x="60" y="70" width="80" height="40" rx="5" transform="rotate(-10 100 90)"/>
+
+                        <!-- Spout -->
+                        <path d="M 145 90 L 170 75 L 175 95 L 160 105 Z"/>
+
+                        <!-- Handle -->
+                        <path d="M 55 100 L 35 90 L 30 130 L 50 135 Z"/>
+
+                        <!-- Main body - left panel -->
+                        <rect x="50" y="130" width="50" height="80" rx="3"/>
+
+                        <!-- Main body - center panel -->
+                        <rect x="105" y="125" width="45" height="90" rx="3" transform="rotate(5 127 170)"/>
+
+                        <!-- Main body - right panel -->
+                        <rect x="75" y="215" width="55" height="45" rx="3" transform="rotate(-8 102 237)"/>
+
+                        <!-- Bottom diamonds -->
+                        <path d="M 135 240 L 145 230 L 155 240 L 145 250 Z" opacity="0.8"/>
+                        <path d="M 160 255 L 167 248 L 174 255 L 167 262 Z" opacity="0.8"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Header and Tea Section -->
+            <div class="header-and-tea">
+                <div class="menu-header">
+                    <h1 class="menu-title">MENU</h1>
+                </div>
+
+                <!-- Tea Section -->
+                <div class="menu-section">
+                    <div class="section-header">
+                        <span class="arabic">شاي</span>
+                        <span class="english">Tea</span>
+                    </div>
+                    <div class="menu-items">
+                        <div class="menu-item" data-name="شاي قزاز" data-price="13" data-category="tea">
+                            <span class="item-name">شاي قزاز</span>
+                            <span class="item-price">13 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="menu-item" data-name="شاي كبير" data-price="8" data-category="tea">
+                            <span class="item-name">شاي كبير</span>
+                            <span class="item-price">8 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="menu-item" data-name="شاي صغير" data-price="6" data-category="tea">
+                            <span class="item-name">شاي صغير</span>
+                            <span class="item-price">6 <span class="currency">SR</span></span>
+                        </div>
+                        <div class="menu-item" data-name="شاي ابريق" data-price="20" data-category="tea">
+                            <span class="item-name">شاي ابريق</span>
+                            <span class="item-price">20 <span class="currency">SR</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="menu-grid">
-            <!-- Tea Section -->
-            <div class="menu-section">
-                <div class="section-header">
-                    <span class="arabic">شاي</span>
-                    <span class="english">Tea</span>
-                </div>
-                <div class="menu-items">
-                    <div class="menu-item" data-name="شاي قزاز" data-price="13" data-category="tea">
-                        <span class="item-name">شاي قزاز</span>
-                        <span class="item-price">13 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="شاي كبير" data-price="8" data-category="tea">
-                        <span class="item-name">شاي كبير</span>
-                        <span class="item-price">8 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="شاي صغير" data-price="6" data-category="tea">
-                        <span class="item-name">شاي صغير</span>
-                        <span class="item-price">6 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="شاي ابريق" data-price="20" data-category="tea">
-                        <span class="item-name">شاي ابريق</span>
-                        <span class="item-price">20 <span class="currency">SR</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Karak Section -->
-            <div class="menu-section">
-                <div class="section-header">
-                    <span class="arabic">كرك</span>
-                    <span class="english">Karak</span>
-                </div>
-                <div class="menu-items">
-                    <div class="menu-item" data-name="كرك قزاز" data-price="14" data-category="karak">
-                        <span class="item-name">كرك قزاز</span>
-                        <span class="item-price">14 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="كرك ابريق" data-price="30" data-category="karak">
-                        <span class="item-name">كرك ابريق</span>
-                        <span class="item-price">30 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="كرك كبير" data-price="9" data-category="karak">
-                        <span class="item-name">كرك كبير</span>
-                        <span class="item-price">9 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="كرك صغير" data-price="7" data-category="karak">
-                        <span class="item-name">كرك صغير</span>
-                        <span class="item-price">7 <span class="currency">SR</span></span>
-                    </div>
-                </div>
-            </div>
-
             <!-- Sweet Section -->
             <div class="menu-section">
                 <div class="section-header">
@@ -429,6 +510,58 @@
                 </div>
             </div>
 
+            <!-- Karak Section -->
+            <div class="menu-section">
+                <div class="section-header">
+                    <span class="arabic">كرك</span>
+                    <span class="english">Karak</span>
+                </div>
+                <div class="menu-items">
+                    <div class="menu-item" data-name="كرك قزاز" data-price="14" data-category="karak">
+                        <span class="item-name">كرك قزاز</span>
+                        <span class="item-price">14 <span class="currency">SR</span></span>
+                    </div>
+                    <div class="menu-item" data-name="كرك ابريق" data-price="30" data-category="karak">
+                        <span class="item-name">كرك ابريق</span>
+                        <span class="item-price">30 <span class="currency">SR</span></span>
+                    </div>
+                    <div class="menu-item" data-name="كرك كبير" data-price="9" data-category="karak">
+                        <span class="item-name">كرك كبير</span>
+                        <span class="item-price">9 <span class="currency">SR</span></span>
+                    </div>
+                    <div class="menu-item" data-name="كرك صغير" data-price="7" data-category="karak">
+                        <span class="item-name">كرك صغير</span>
+                        <span class="item-price">7 <span class="currency">SR</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Baked Section -->
+            <div class="menu-section">
+                <div class="section-header">
+                    <span class="arabic">مخبوزات</span>
+                    <span class="english">Baked</span>
+                </div>
+                <div class="menu-items">
+                    <div class="menu-item" data-name="مسحن" data-price="18" data-category="baked">
+                        <span class="item-name">مسحن</span>
+                        <span class="item-price">18 <span class="currency">SR</span></span>
+                    </div>
+                    <div class="menu-item" data-name="خليبة" data-price="18" data-category="baked">
+                        <span class="item-name">خليبة</span>
+                        <span class="item-price">18 <span class="currency">SR</span></span>
+                    </div>
+                    <div class="menu-item" data-name="ورق عنب" data-price="15" data-category="baked">
+                        <span class="item-name">ورق عنب</span>
+                        <span class="item-price">15 <span class="currency">SR</span></span>
+                    </div>
+                    <div class="menu-item" data-name="سمبوسة" data-price="12" data-category="baked">
+                        <span class="item-name">سمبوسة</span>
+                        <span class="item-price">12 <span class="currency">SR</span></span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Coffee Section -->
             <div class="menu-section">
                 <div class="section-header">
@@ -447,32 +580,6 @@
                     <div class="menu-item" data-name="دلة سعودي" data-price="25" data-category="coffee">
                         <span class="item-name">دلة سعودي</span>
                         <span class="item-price">25 <span class="currency">SR</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Baked Section -->
-            <div class="menu-section" style="grid-column: 1 / -1;">
-                <div class="section-header">
-                    <span class="arabic">مخبوزات</span>
-                    <span class="english">Baked</span>
-                </div>
-                <div class="menu-items" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-                    <div class="menu-item" data-name="مسحن" data-price="18" data-category="baked">
-                        <span class="item-name">مسحن</span>
-                        <span class="item-price">18 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="خليبة" data-price="18" data-category="baked">
-                        <span class="item-name">خليبة</span>
-                        <span class="item-price">18 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="ورق عنب" data-price="15" data-category="baked">
-                        <span class="item-name">ورق عنب</span>
-                        <span class="item-price">15 <span class="currency">SR</span></span>
-                    </div>
-                    <div class="menu-item" data-name="سمبوسة" data-price="12" data-category="baked">
-                        <span class="item-name">سمبوسة</span>
-                        <span class="item-price">12 <span class="currency">SR</span></span>
                     </div>
                 </div>
             </div>
@@ -496,7 +603,10 @@
 
     <!-- Order Cart -->
     <div class="order-cart hidden" id="orderCart">
-        <div class="cart-header">سلة الطلبات</div>
+        <div class="cart-header">
+            <span>سلة الطلبات</span>
+            <span class="order-status" id="orderStatus"></span>
+        </div>
         <div id="cartItems"></div>
         <div class="cart-total">
             المجموع: <span id="cartTotal">0</span> SR
@@ -510,6 +620,8 @@
     <script>
         // Cart management
         let cart = [];
+        let currentOrderId = null;
+        let currentOrderStatus = null;
 
         // Load cart from localStorage
         function loadCart() {
@@ -518,11 +630,67 @@
                 cart = JSON.parse(savedCart);
                 updateCartDisplay();
             }
+
+            // Check for active order
+            const savedOrderId = localStorage.getItem('shaySukarCurrentOrderId');
+            if (savedOrderId) {
+                currentOrderId = parseInt(savedOrderId);
+                checkOrderStatus();
+            }
+        }
+
+        // Check order status
+        function checkOrderStatus() {
+            if (!currentOrderId) return;
+
+            const orders = JSON.parse(localStorage.getItem('shaySukarOrders') || '[]');
+            const order = orders.find(o => o.id === currentOrderId);
+
+            if (order) {
+                currentOrderStatus = order.status;
+                updateOrderStatusDisplay();
+
+                if (order.status === 'completed' || order.status === 'cancelled') {
+                    // Clear current order
+                    currentOrderId = null;
+                    currentOrderStatus = null;
+                    localStorage.removeItem('shaySukarCurrentOrderId');
+                    updateOrderStatusDisplay();
+                }
+            }
+        }
+
+        // Update order status display
+        function updateOrderStatusDisplay() {
+            const statusEl = document.getElementById('orderStatus');
+            if (!currentOrderStatus || !statusEl) return;
+
+            const statusText = {
+                'pending': 'جديد',
+                'preparing': 'قيد التحضير',
+                'ready': 'جاهز',
+                'completed': 'مكتمل',
+                'cancelled': 'ملغي'
+            };
+
+            statusEl.textContent = statusText[currentOrderStatus] || '';
+            statusEl.className = `order-status status-${currentOrderStatus}`;
+            statusEl.style.display = currentOrderStatus ? 'block' : 'none';
         }
 
         // Save cart to localStorage
         function saveCart() {
             localStorage.setItem('shaySukarCart', JSON.stringify(cart));
+            updateItemHighlights();
+        }
+
+        // Update item highlights
+        function updateItemHighlights() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const name = item.dataset.name;
+                const inCart = cart.some(cartItem => cartItem.name === name);
+                item.classList.toggle('in-cart', inCart);
+            });
         }
 
         // Add item to cart
@@ -610,8 +778,9 @@
 
             const customerName = prompt('الاسم (اختياري):') || 'زبون';
 
+            const orderId = Date.now();
             const order = {
-                id: Date.now(),
+                id: orderId,
                 items: cart,
                 total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
                 tableNumber: tableNumber,
@@ -625,6 +794,11 @@
             orders.push(order);
             localStorage.setItem('shaySukarOrders', JSON.stringify(orders));
 
+            // Set current order ID
+            currentOrderId = orderId;
+            currentOrderStatus = 'pending';
+            localStorage.setItem('shaySukarCurrentOrderId', orderId);
+
             // Trigger storage event manually for same-window updates
             window.dispatchEvent(new StorageEvent('storage', {
                 key: 'shaySukarOrders',
@@ -635,6 +809,7 @@
             cart = [];
             updateCartDisplay();
             saveCart();
+            updateOrderStatusDisplay();
 
             // Close cart
             document.getElementById('orderCart').classList.add('hidden');
@@ -666,8 +841,19 @@
             }
         });
 
+        // Listen for storage changes (order status updates)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shaySukarOrders' && currentOrderId) {
+                checkOrderStatus();
+            }
+        });
+
         // Load cart on page load
         loadCart();
+        updateItemHighlights();
+
+        // Check order status periodically
+        setInterval(checkOrderStatus, 2000);
     </script>
 </body>
 </html>
