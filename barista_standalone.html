@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barista Dashboard - Shay Sukar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1A4D5C 0%, #2A6D7C 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #FAF4EA;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: rgba(250, 244, 234, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: rgba(250, 244, 234, 0.15);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #5cb85c;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        .orders-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .order-card {
+            background-color: #FAF4EA;
+            color: #1A4D5C;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1A4D5C;
+        }
+
+        .order-id {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .order-time {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .order-info {
+            margin-bottom: 15px;
+        }
+
+        .order-table {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .order-customer {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .order-items {
+            margin: 15px 0;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background-color: rgba(26, 77, 92, 0.1);
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+
+        .item-name {
+            font-weight: 600;
+        }
+
+        .item-quantity {
+            opacity: 0.7;
+            margin-left: 10px;
+        }
+
+        .item-price {
+            font-weight: 700;
+        }
+
+        .order-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: right;
+            padding-top: 10px;
+            border-top: 2px solid #1A4D5C;
+            margin-top: 10px;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-preparing {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .btn-preparing:hover {
+            background-color: #ec971f;
+        }
+
+        .btn-ready {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        .btn-ready:hover {
+            background-color: #4cae4c;
+        }
+
+        .btn-complete {
+            background-color: #0275d8;
+            color: white;
+        }
+
+        .btn-complete:hover {
+            background-color: #025aa5;
+        }
+
+        .btn-cancel {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c9302c;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-pending {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .status-preparing {
+            background-color: #0275d8;
+            color: white;
+        }
+
+        .status-ready {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        .status-completed {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        .status-cancelled {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            grid-column: 1 / -1;
+        }
+
+        .sound-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(250, 244, 234, 0.2);
+            color: white;
+            border: 2px solid #FAF4EA;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .sound-toggle:hover {
+            background-color: rgba(250, 244, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .orders-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="sound-toggle" id="soundToggle">🔔 تنبيه صوتي</button>
+
+    <div class="dashboard-header">
+        <h1>لوحة تحكم الباريستا</h1>
+        <p>Shay Sukar Order Management</p>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-value" id="statPending">0</div>
+            <div class="stat-label">طلبات جديدة</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statPreparing">0</div>
+            <div class="stat-label">قيد التحضير</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statReady">0</div>
+            <div class="stat-label">جاهزة</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statCompleted">0</div>
+            <div class="stat-label">مكتملة</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="statRevenue">0</div>
+            <div class="stat-label">الإيرادات (SR)</div>
+        </div>
+    </div>
+
+    <div class="orders-container" id="ordersContainer">
+        <div class="no-orders">لا توجد طلبات حاليًا</div>
+    </div>
+
+    <script>
+        let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+        let orders = [];
+        let lastOrderCount = 0;
+
+        // Update sound toggle button
+        function updateSoundToggle() {
+            const btn = document.getElementById('soundToggle');
+            btn.textContent = soundEnabled ? '🔔 تنبيه صوتي' : '🔕 صامت';
+        }
+
+        // Play notification sound
+        function playNotificationSound() {
+            if (!soundEnabled) return;
+
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        // Load orders from localStorage
+        function loadOrders() {
+            const savedOrders = localStorage.getItem('shaySukarOrders');
+            if (savedOrders) {
+                orders = JSON.parse(savedOrders);
+
+                // Check for new orders
+                const currentOrderCount = orders.filter(o => o.status === 'pending').length;
+                if (currentOrderCount > lastOrderCount) {
+                    playNotificationSound();
+                }
+                lastOrderCount = currentOrderCount;
+
+                renderOrders();
+                updateStats();
+            }
+        }
+
+        // Save orders to localStorage
+        function saveOrders() {
+            localStorage.setItem('shaySukarOrders', JSON.stringify(orders));
+        }
+
+        // Update statistics
+        function updateStats() {
+            const pending = orders.filter(o => o.status === 'pending').length;
+            const preparing = orders.filter(o => o.status === 'preparing').length;
+            const ready = orders.filter(o => o.status === 'ready').length;
+            const completed = orders.filter(o => o.status === 'completed').length;
+            const revenue = orders
+                .filter(o => o.status === 'completed')
+                .reduce((sum, o) => sum + o.total, 0);
+
+            document.getElementById('statPending').textContent = pending;
+            document.getElementById('statPreparing').textContent = preparing;
+            document.getElementById('statReady').textContent = ready;
+            document.getElementById('statCompleted').textContent = completed;
+            document.getElementById('statRevenue').textContent = revenue.toFixed(2);
+        }
+
+        // Render orders
+        function renderOrders() {
+            const container = document.getElementById('ordersContainer');
+
+            // Filter to show active orders
+            const activeOrders = orders.filter(o =>
+                o.status === 'pending' || o.status === 'preparing' || o.status === 'ready'
+            );
+
+            if (activeOrders.length === 0) {
+                container.innerHTML = '<div class="no-orders">لا توجد طلبات نشطة حاليًا</div>';
+                return;
+            }
+
+            container.innerHTML = activeOrders.map(order => {
+                const time = new Date(order.createdAt).toLocaleTimeString('ar-SA', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                return `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div class="order-id">طلب #${order.id}</div>
+                            <div class="order-time">${time}</div>
+                        </div>
+                        <div class="order-info">
+                            <div class="order-table">طاولة: ${order.tableNumber}</div>
+                            <div class="order-customer">الزبون: ${order.customerName}</div>
+                            <span class="status-badge status-${order.status}">
+                                ${getStatusText(order.status)}
+                            </span>
+                        </div>
+                        <div class="order-items">
+                            ${order.items.map(item => `
+                                <div class="order-item">
+                                    <div>
+                                        <span class="item-name">${item.name}</span>
+                                        <span class="item-quantity">x${item.quantity}</span>
+                                    </div>
+                                    <span class="item-price">${(item.price * item.quantity).toFixed(2)} SR</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="order-total">
+                            المجموع: ${order.total.toFixed(2)} SR
+                        </div>
+                        <div class="order-actions">
+                            ${getActionButtons(order.id, order.status)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Get status text in Arabic
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'جديد',
+                'preparing': 'قيد التحضير',
+                'ready': 'جاهز',
+                'completed': 'مكتمل',
+                'cancelled': 'ملغي'
+            };
+            return statusMap[status] || status;
+        }
+
+        // Get action buttons based on order status
+        function getActionButtons(orderId, status) {
+            switch (status) {
+                case 'pending':
+                    return `
+                        <button class="btn btn-preparing" onclick="updateOrderStatus(${orderId}, 'preparing')">بدء التحضير</button>
+                        <button class="btn btn-cancel" onclick="updateOrderStatus(${orderId}, 'cancelled')">إلغاء</button>
+                    `;
+                case 'preparing':
+                    return `
+                        <button class="btn btn-ready" onclick="updateOrderStatus(${orderId}, 'ready')">جاهز</button>
+                        <button class="btn btn-cancel" onclick="updateOrderStatus(${orderId}, 'cancelled')">إلغاء</button>
+                    `;
+                case 'ready':
+                    return `
+                        <button class="btn btn-complete" onclick="updateOrderStatus(${orderId}, 'completed')">تسليم</button>
+                    `;
+                default:
+                    return '';
+            }
+        }
+
+        // Update order status
+        function updateOrderStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                saveOrders();
+                renderOrders();
+                updateStats();
+            }
+        }
+
+        // Toggle sound
+        document.getElementById('soundToggle').addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('soundEnabled', soundEnabled);
+            updateSoundToggle();
+        });
+
+        // Listen for storage changes from other tabs
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'shaySukarOrders') {
+                loadOrders();
+            }
+        });
+
+        // Initialize
+        updateSoundToggle();
+        loadOrders();
+
+        // Refresh orders every 2 seconds
+        setInterval(loadOrders, 2000);
+    </script>
+</body>
+</html>
