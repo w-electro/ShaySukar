@@ -41,10 +41,11 @@
             justify-content: center;
         }
 
-        .logo-svg {
+        .logo-img {
             width: 100%;
             max-width: 250px;
             height: auto;
+            object-fit: contain;
         }
 
         .header-and-tea {
@@ -55,6 +56,7 @@
 
         .menu-header {
             text-align: center;
+            position: relative;
         }
 
         .menu-title {
@@ -62,6 +64,66 @@
             font-weight: 700;
             color: #1A4D5C;
             letter-spacing: 0.15em;
+        }
+
+        .order-status-banner {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1A4D5C;
+            color: #FAF4EA;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            box-shadow: 0 8px 25px rgba(26, 77, 92, 0.4);
+            z-index: 1500;
+            display: none;
+            animation: statusPulse 2s infinite;
+            min-width: 250px;
+            text-align: center;
+        }
+
+        .order-status-banner.show {
+            display: block;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+
+        .order-status-banner.status-pending {
+            background-color: #f0ad4e;
+        }
+
+        .order-status-banner.status-preparing {
+            background-color: #0275d8;
+        }
+
+        .order-status-banner.status-ready {
+            background-color: #5cb85c;
+            animation: statusReady 1s infinite;
+        }
+
+        @keyframes statusReady {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 8px 25px rgba(92, 184, 92, 0.6);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.08);
+                box-shadow: 0 12px 35px rgba(92, 184, 92, 0.8);
+            }
+        }
+
+        .order-status-banner.status-completed {
+            background-color: #5bc0de;
         }
 
         .menu-grid {
@@ -414,35 +476,7 @@
         <div class="top-section">
             <!-- Logo Section -->
             <div class="logo-container">
-                <svg class="logo-svg" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Abstract geometric teapot design -->
-                    <g fill="#FAF4EA" stroke="#FAF4EA" stroke-width="3">
-                        <!-- Top ornament -->
-                        <path d="M 40 40 L 60 20 L 80 40 L 60 60 Z" opacity="0.9"/>
-
-                        <!-- Upper container part -->
-                        <rect x="60" y="70" width="80" height="40" rx="5" transform="rotate(-10 100 90)"/>
-
-                        <!-- Spout -->
-                        <path d="M 145 90 L 170 75 L 175 95 L 160 105 Z"/>
-
-                        <!-- Handle -->
-                        <path d="M 55 100 L 35 90 L 30 130 L 50 135 Z"/>
-
-                        <!-- Main body - left panel -->
-                        <rect x="50" y="130" width="50" height="80" rx="3"/>
-
-                        <!-- Main body - center panel -->
-                        <rect x="105" y="125" width="45" height="90" rx="3" transform="rotate(5 127 170)"/>
-
-                        <!-- Main body - right panel -->
-                        <rect x="75" y="215" width="55" height="45" rx="3" transform="rotate(-8 102 237)"/>
-
-                        <!-- Bottom diamonds -->
-                        <path d="M 135 240 L 145 230 L 155 240 L 145 250 Z" opacity="0.8"/>
-                        <path d="M 160 255 L 167 248 L 174 255 L 167 262 Z" opacity="0.8"/>
-                    </g>
-                </svg>
+                <img src="logo.png" alt="Shay Sukar Logo" class="logo-img">
             </div>
 
             <!-- Header and Tea Section -->
@@ -595,6 +629,9 @@
         </div>
     </div>
 
+    <!-- Order Status Banner -->
+    <div class="order-status-banner" id="statusBanner"></div>
+
     <!-- Cart Toggle Button -->
     <div class="cart-toggle" id="cartToggle">
         <span style="font-size: 1.8rem;">🛒</span>
@@ -663,19 +700,35 @@
         // Update order status display
         function updateOrderStatusDisplay() {
             const statusEl = document.getElementById('orderStatus');
-            if (!currentOrderStatus || !statusEl) return;
+            const bannerEl = document.getElementById('statusBanner');
 
             const statusText = {
-                'pending': 'جديد',
-                'preparing': 'قيد التحضير',
-                'ready': 'جاهز',
-                'completed': 'مكتمل',
-                'cancelled': 'ملغي'
+                'pending': '⏱️ طلبك قيد الانتظار',
+                'preparing': '👨‍🍳 جاري تحضير طلبك',
+                'ready': '✅ طلبك جاهز!',
+                'completed': '🎉 تم التسليم',
+                'cancelled': '❌ تم إلغاء الطلب'
             };
 
-            statusEl.textContent = statusText[currentOrderStatus] || '';
-            statusEl.className = `order-status status-${currentOrderStatus}`;
-            statusEl.style.display = currentOrderStatus ? 'block' : 'none';
+            if (currentOrderStatus && bannerEl) {
+                bannerEl.textContent = statusText[currentOrderStatus] || '';
+                bannerEl.className = `order-status-banner show status-${currentOrderStatus}`;
+            } else if (bannerEl) {
+                bannerEl.classList.remove('show');
+            }
+
+            if (statusEl) {
+                const cartStatusText = {
+                    'pending': 'جديد',
+                    'preparing': 'قيد التحضير',
+                    'ready': 'جاهز',
+                    'completed': 'مكتمل',
+                    'cancelled': 'ملغي'
+                };
+                statusEl.textContent = cartStatusText[currentOrderStatus] || '';
+                statusEl.className = `order-status status-${currentOrderStatus}`;
+                statusEl.style.display = currentOrderStatus ? 'block' : 'none';
+            }
         }
 
         // Save cart to localStorage
